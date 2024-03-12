@@ -1,0 +1,199 @@
+<?php
+include('header.php');
+$id=$_GET['p_id'];
+$pr_id=array();
+$pr_id=explode(',' ,$id);
+$user_id=$_SESSION['userid'];
+// $sql="SELECT * FROM product WHERE id='".$product_id."'";
+// $record[]=array();
+// $result=mysqli_query($con,$sql);
+// while($data=mysqli_fetch_assoc($result))
+// {
+// 	$record[]=$data;
+// }
+// }
+?>
+<body>
+	<!-- <form action="orderaction.php" method="post"> -->
+		<!-- Modal -->
+		<section class="overflow">
+		<div class="row">
+			<div class="col-md-12">
+		 <button type="button" name="" value="Proceed To Pay" class="text-center text-light bg-danger mt-4 mx-auto"data-bs-toggle="modal" data-bs-target="#staticBackdrop">DELIVEY ADDRESS</button>
+		</div>
+	</div>
+	</section>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<div class="form mx-auto bg-light">
+
+    <div class="form1 mx-auto">
+    <div class="row">
+      <div class="col-md-12 ">
+        <form action="deliveryaddressaction.php" method="post">
+        <h3 class=" text-center"><b>ORDER NOW</b></h3>
+        <input type="text" class="form-control p-4 mt-3" id="exampleFormControlInput1" placeholder="Name" name="name">
+        <div class="mb-3"></div>
+        <input type="number" class="form-control inputs p-4" id="exampleFormControlInput1" placeholder="Alternative number" name="phone">
+        <div class="mb-3"></div>
+        
+
+      
+       
+        <h5><b>Address info</b></h5>
+          <input type="text" class="form-control p-4 mt-3" id="exampleFormControlInput1" placeholder="Flat No/Bulding Name"name="build">
+        <div class="mb-3"></div>
+          <input type="text" class="form-control p-4 mt-3" id="exampleFormControlInput1" placeholder="Landmark" name="land">
+        <div class="mb-3"></div>
+          <input type="text" class="form-control p-4 mt-3" id="exampleFormControlInput1" placeholder="Area/Street/Locality" name="area">
+        <div class="mb-3"></div>
+       <select class="form-select form-select-lg mb-3 p-1 border border-secondary" aria-label=".form-select-lg example" name="state">
+  <option selected>Select State</option>
+  <option value="west bengal">West Bengal</option>
+  <option value="kerala">Kerala</option>
+  <option value="bihar">Bhiar</option>
+   <option value="jharkhand">Jharkhand</option>
+</select>
+<div class="mb-3"></div>
+<h5><b>What3words.address(optional)</b></h5>
+<input type="text" class="form-control p-4 mt-3" id="exampleFormControlInput1" placeholder="optaional address" name="option">
+        <div class="mb-3"></div>
+        <input type="radio" name="rad" id="opt" value="home">
+        <label for="opt">Home</label>
+        <input type="radio" name="rad" id="ort" value="home">
+        <label for="ort">Office</label>
+        <input type="radio" name="rad" id="okt" value="home">
+        <label for="okt ">Custom</label>
+         <div class="mb-3"></div>
+     
+        <div class="mb-3"></div>
+        <button type="submit" name="addre">Comfirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+      	    </div>
+     
+          <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+	<div class="row">
+			<?php
+			foreach($pr_id as $key => $pr_val)
+{
+	$product_id=$pr_val;
+			$record1=all_data($product_id);
+			foreach($record1 as $buynow)
+			{
+			?>
+			<div class="col-md-4">
+			<input type="hidden" name="p_id" value="<?php echo $buynow['id']?>?">
+			<img src="<?php echo 'assets/img/'.$buynow['image'];?>" width="50%" height="50%">
+			<h5><?php echo $buynow['name']?>"</h5>
+			<h5>price:<?php echo $buynow['dis_price']?></h5>
+			
+				<select name="quantity" onchange="total_Price(this.value);">
+			    <option value="1">1</option>
+			    <option value="2">2</option>
+			    <o
+
+			    ption value="3">3</option>
+			    <option value="4">4</option>
+			</select>
+
+		<p>You pay</p>
+			<input type="text" name="item_price" readonly value="<?php echo $buynow['dis_price'];?>" id="total_amount1" style="border: none;margin-left: 35px; font-size: 25px;">
+		</div>
+		<?php
+$real_price=$buynow['price'];
+$discount=$buynow['discount'];
+}
+}
+?>
+</div>
+</div>
+		
+		
+
+
+<!-- </form> -->
+
+
+<section>
+
+	<div class="payament p-2 mx-auto">
+    <h4 class="text-center"><b>Bag Summary</b></h4>
+    <div class="total">
+       <div class="total1"><p class="text-success ml-3">Total Item(1)</p></div>
+      <div class="total1"><p class="ml-3">price </p></div>
+      <div class="total2" ><p ><i class="fa fa-inr "><b id="real"><?php echo $real_price;?></b></i></p></div>
+      <div class="total1"><p class="ml-3">discount</p></div>
+      <div class="total2"><p ><b id="dis
+
+      	"><?php echo $discount;?></b>%</p></div>
+      <div class="total1"><p class="ml-3">Delivary</p></div>
+      <div class="total2"><p class="text-danger">FREE</p></div>
+      <div class="total1"><p class="ml-3">Sub total</p></div>
+      <div class="total2"><p><i class="fa fa-inr"><b></b></i></p></div>
+      
+      
+
+    </div>
+    <div class="total1"><p class="text-danger ml-3"><b>YOU PAY<b></p></div>
+    <div class="total2"><p id="payatm"><i class="fa fa-inr"><b><b id="payatm"><?php echo $buynow['dis_price'];?></b></i></b></i></p></div>
+     <button type="button" name="" value="Proceed To Pay" class="text-center text-light free mt-4"data-bs-toggle="modal" data-bs-target="#staticBackdrop">Procced to pay</button>
+   </div>
+</div>
+</div>
+
+</section>
+
+
+
+
+
+<script type="text/javascript">
+	function total_Price(val){
+      <?php
+          if(!empty($record1))
+        {
+        foreach ($record1 as $key => $buy_now1) {
+            
+        ?>
+var t=val*<?php echo $buy_now1['dis_price'];?>;
+var real=val*<?php echo $buy_now1['price'];?>;
+var discount=val*<?php echo $buy_now1['discount'];?>;
+<?php
+}
+}
+?>
+document.getElementById("total_amount1").value=t;
+document.getElementById("payatm").innerHTML=t;
+document.getElementById("real").innerHTML=real;
+document.getElementById("dis").innerHTML=discount;
+}
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#total_amount1").on('change',function(){
+		let pay=$("#total_amount1").val();
+		$('#payment').html(pay);
+	});
+});
+</script>
+</body>
+<?php 
+include('footer.php');

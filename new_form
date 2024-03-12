@@ -1,0 +1,25 @@
+<?php include "function.php"; $id = $_GET['uid']; echo $id;?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<?php 
+$name="";
+$call = allRecods($id) ;
+//print_r($call);
+ foreach($call as $val){
+$name = $val['name'];
+ } ?>
+    <form action="update_action.php" method="post">
+        <input type="text" name="c_name" placeholder="new name" value="<?php if($name!=""){echo $name;}
+        ?>">
+        <input type="text" name="us_id"  value="<?php if($id!=""){echo $id;}
+        ?>">
+        <button type="submit">Change</button>
+    </form>
+</body>
+</html>
